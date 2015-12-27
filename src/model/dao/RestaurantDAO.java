@@ -42,14 +42,21 @@ public class RestaurantDAO extends AbstractDAO {
     @Override
     public List findAllMeal() {
         List<Meal> meals = new ArrayList<>();
-        try (Connection conn = Connector.getConnection();
-                Statement st = conn.createStatement()) {
+        Connection conn = null;
+        Statement st;
+        try {
+            conn = connectionPool.getConnection();
+            st = conn.createStatement();
             ResultSet rs = st.executeQuery(SQL_GET_ALL);
             while (rs.next()) {
                 meals.add(getMeal(rs));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally { 
+            if (conn != null) {
+                connectionPool.putConnection(conn);
+            }
         }
         return meals;
     }
@@ -78,9 +85,11 @@ public class RestaurantDAO extends AbstractDAO {
             default:
                 return null;
         }
-        
-        try (Connection conn = Connector.getConnection();
-                PreparedStatement ps = conn.prepareStatement(SQL_GET_BY_TYPE)) {   
+        Connection conn = null;
+        PreparedStatement ps;
+        try {  
+            conn = connectionPool.getConnection();
+            ps = conn.prepareStatement(SQL_GET_BY_TYPE);
             ps.setString(1, typeString);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -88,6 +97,10 @@ public class RestaurantDAO extends AbstractDAO {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            if (conn != null) {
+                connectionPool.putConnection(conn);
+            }
         }
         return allMeal;
     }
@@ -99,13 +112,12 @@ public class RestaurantDAO extends AbstractDAO {
      * @throws SQLException 
      */
     private Meal getMeal(ResultSet rs) throws SQLException {
-        Meal newMeal;
         int id = rs.getInt("meal_id");
         String type = rs.getString("meal_type");
         String name = rs.getString("meal_name");
         String description = rs.getString("meal_description");
         BigDecimal price = rs.getBigDecimal("meal_price");
-        return newMeal = new Meal(id, type, name, description, price);
+        return new Meal(id, type, name, description, price);
     }
     
     /**
@@ -116,8 +128,11 @@ public class RestaurantDAO extends AbstractDAO {
     @Override
     public boolean createMeal(Meal entity) {
         boolean flag = false;
-        try (Connection conn = Connector.getConnection();
-                PreparedStatement ps = conn.prepareStatement(SQL_INSERT_MEAL)) {
+        Connection conn = null;
+        PreparedStatement ps;
+        try {
+            conn = connectionPool.getConnection();
+            ps = conn.prepareStatement(SQL_INSERT_MEAL);
             ps.setInt(1, entity.getId());
             ps.setString(2, entity.getTypeString());
             ps.setString(3, entity.getName());
@@ -127,6 +142,10 @@ public class RestaurantDAO extends AbstractDAO {
             flag = true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            if (conn != null) {
+                connectionPool.putConnection(conn);
+            }
         }
         return flag;
     }
@@ -149,13 +168,20 @@ public class RestaurantDAO extends AbstractDAO {
     @Override
     public boolean deleteMeal(int id) {
         boolean flag = false;
-        try (Connection conn = Connector.getConnection();
-                PreparedStatement ps = conn.prepareStatement(SQL_DELETE_BY_ID)) {
+        Connection conn = null;
+        PreparedStatement ps;
+        try {
+            conn = connectionPool.getConnection();
+            ps = conn.prepareStatement(SQL_DELETE_BY_ID);
             ps.setInt(1, id);
             ps.executeUpdate();
             flag = true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            if (conn != null) {
+                connectionPool.putConnection(conn);
+            }
         }
         return flag;
     }

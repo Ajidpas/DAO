@@ -16,6 +16,8 @@ import model.entity.Meal;
  */
 public abstract class AbstractDAO<K, T extends Meal> {
     
+    protected ConnectionPool connectionPool = new ConnectionPool();
+    
     public abstract List<T> findAllMeal();
     
     public abstract boolean createMeal(T entity);
