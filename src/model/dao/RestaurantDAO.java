@@ -6,7 +6,6 @@
 package model.dao;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,11 +41,11 @@ public class RestaurantDAO extends AbstractDAO {
     @Override
     public List findAllMeal() {
         List<Meal> meals = new ArrayList<>();
-        Connection conn = null;
+        WrapperConnection wrapperConnection = null;
         Statement st;
         try {
-            conn = connectionPool.getConnection();
-            st = conn.createStatement();
+            wrapperConnection = connectionPool.getConnection();
+            st = wrapperConnection.createStatement();
             ResultSet rs = st.executeQuery(SQL_GET_ALL);
             while (rs.next()) {
                 meals.add(getMeal(rs));
@@ -54,8 +53,8 @@ public class RestaurantDAO extends AbstractDAO {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally { 
-            if (conn != null) {
-                connectionPool.putConnection(conn);
+            if (wrapperConnection != null) {
+                wrapperConnection.close();
             }
         }
         return meals;
@@ -85,11 +84,11 @@ public class RestaurantDAO extends AbstractDAO {
             default:
                 return null;
         }
-        Connection conn = null;
+        WrapperConnection wrapperConnection = null;
         PreparedStatement ps;
         try {  
-            conn = connectionPool.getConnection();
-            ps = conn.prepareStatement(SQL_GET_BY_TYPE);
+            wrapperConnection = connectionPool.getConnection();
+            ps = wrapperConnection.prepareStatement(SQL_GET_BY_TYPE);
             ps.setString(1, typeString);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -98,8 +97,8 @@ public class RestaurantDAO extends AbstractDAO {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            if (conn != null) {
-                connectionPool.putConnection(conn);
+            if (wrapperConnection != null) {
+                wrapperConnection.close();
             }
         }
         return allMeal;
@@ -128,11 +127,11 @@ public class RestaurantDAO extends AbstractDAO {
     @Override
     public boolean createMeal(Meal entity) {
         boolean flag = false;
-        Connection conn = null;
+        WrapperConnection wrapperConnection = null;
         PreparedStatement ps;
         try {
-            conn = connectionPool.getConnection();
-            ps = conn.prepareStatement(SQL_INSERT_MEAL);
+            wrapperConnection = connectionPool.getConnection();
+            ps = wrapperConnection.prepareStatement(SQL_INSERT_MEAL);
             ps.setInt(1, entity.getId());
             ps.setString(2, entity.getTypeString());
             ps.setString(3, entity.getName());
@@ -143,8 +142,8 @@ public class RestaurantDAO extends AbstractDAO {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            if (conn != null) {
-                connectionPool.putConnection(conn);
+            if (wrapperConnection != null) {
+                wrapperConnection.close();
             }
         }
         return flag;
@@ -168,19 +167,19 @@ public class RestaurantDAO extends AbstractDAO {
     @Override
     public boolean deleteMeal(int id) {
         boolean flag = false;
-        Connection conn = null;
+        WrapperConnection wrapperConnection = null;
         PreparedStatement ps;
         try {
-            conn = connectionPool.getConnection();
-            ps = conn.prepareStatement(SQL_DELETE_BY_ID);
+            wrapperConnection = connectionPool.getConnection();
+            ps = wrapperConnection.prepareStatement(SQL_DELETE_BY_ID);
             ps.setInt(1, id);
             ps.executeUpdate();
             flag = true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            if (conn != null) {
-                connectionPool.putConnection(conn);
+            if (wrapperConnection != null) {
+                wrapperConnection.close();
             }
         }
         return flag;

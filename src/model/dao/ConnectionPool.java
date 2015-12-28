@@ -35,9 +35,10 @@ public class ConnectionPool {
         this.maxConnections = maxConnections;
     }
     
-    public Connection getConnection() throws SQLException {
+    public WrapperConnection getConnection() throws SQLException {
+        Connection freeConnection;
         if (connections.size() >0) {
-            return connections.poll();
+            freeConnection = connections.poll();
         } else {
             Properties prop = new Properties();
             ResourceBundle bundle = ResourceBundle.getBundle("model/dao/restaurantprop");
@@ -49,8 +50,9 @@ public class ConnectionPool {
             prop.put("autoReconnect", "true");
             prop.put("characterEncoding", "UTF-8");
             prop.put("useUnicode", "true");
-            return DriverManager.getConnection(url, prop);
+            freeConnection = DriverManager.getConnection(url, prop);
         }
+        return new WrapperConnection(freeConnection, this);
     }
     
     public void putConnection(Connection connection) {
