@@ -25,6 +25,7 @@ public class ConnectionPool {
     /** max number of connections in the queue */
     private int maxConnections;
     
+    /** maximum number of connetions by default */
     private static final int MAX_CONNECTIONS_DEFAULT = 1;
 
     /**
