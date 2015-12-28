@@ -16,15 +16,15 @@ import model.entity.Meal;
  */
 public abstract class AbstractDAO<K, T extends Meal> {
     
-    protected ConnectionPool connectionPool = new ConnectionPool();
+    protected static final ConnectionPool CONNECTION_POOL = new ConnectionPool();
     
-    public abstract List<T> findAllMeal();
+    public abstract List<T> findAllMeal() throws ServerOverloadedException;
     
-    public abstract boolean createMeal(T entity);
+    public abstract boolean createMeal(T entity) throws ServerOverloadedException;
     
-    public abstract boolean deleteMeal(T entity);
+    public abstract boolean deleteMeal(T entity) throws ServerOverloadedException;
     
-    public abstract boolean deleteMeal(int id);
+    public abstract boolean deleteMeal(int id) throws ServerOverloadedException;
     
-    public abstract boolean updateMeal(T entity);
+    public abstract boolean updateMeal(T entity) throws ServerOverloadedException;
 }

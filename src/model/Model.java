@@ -8,6 +8,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import model.dao.RestaurantDAO;
+import model.dao.ServerOverloadedException;
 import model.entity.Meal;
 
 /**
@@ -20,15 +21,15 @@ public class Model {
     
     private List<Meal> meals = new ArrayList<>();
     
-    public List<Meal> getMeal() {
+    public List<Meal> getMeal() throws ServerOverloadedException {
         return meals = restaurant.findAllMeal();
     }
     
-    public boolean addMeal(Meal entity) {
+    public boolean addMeal(Meal entity) throws ServerOverloadedException {
         return restaurant.createMeal(entity);
     }
     
-    public boolean delete(int id) {
+    public boolean delete(int id) throws ServerOverloadedException {
         return restaurant.deleteMeal(id);
     }
 }

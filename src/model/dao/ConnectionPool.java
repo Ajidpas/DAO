@@ -19,27 +19,49 @@ import java.util.ResourceBundle;
  */
 public class ConnectionPool {
     
+    /** queue of connections */
     private Queue<Connection> connections;
     
+    /** max number of connections in the queue */
     private int maxConnections;
+    
+    private static final int MAX_CONNECTIONS_DEFAULT = 1;
 
+    /**
+     * Constructor
+     */
     public ConnectionPool() {
         connections = new LinkedList<>();
+        maxConnections = MAX_CONNECTIONS_DEFAULT;
     }
     
-    public int getMaxConnections() {
+    /** 
+     * Get max nubmer of connections
+     * @return int max number of connections
+     */
+    public synchronized int getMaxConnections() {
         return maxConnections;
     }
     
-    public void setMaxConnection(int maxConnections) {
+    /**
+     * Set maxium number of connections in the queue
+     * @param maxConnections 
+     */
+    public synchronized void setMaxConnection(int maxConnections) {
         this.maxConnections = maxConnections;
     }
     
-    public WrapperConnection getConnection() throws SQLException {
+    /**
+     * Get free connection if exists or create new connection
+     * @return 
+     * @throws SQLException 
+     * @throws ServerOverloadedException
+     */
+    public synchronized WrapperConnection getConnection() throws SQLException, ServerOverloadedException {
         Connection freeConnection;
-        if (connections.size() >0) {
+        if (connections.size() > 0) {
             freeConnection = connections.poll();
-        } else {
+        } else if (connections.size() < maxConnections) {
             Properties prop = new Properties();
             ResourceBundle bundle = ResourceBundle.getBundle("model/dao/restaurantprop");
             String url = bundle.getString("db.url");
@@ -51,11 +73,17 @@ public class ConnectionPool {
             prop.put("characterEncoding", "UTF-8");
             prop.put("useUnicode", "true");
             freeConnection = DriverManager.getConnection(url, prop);
+        } else {
+            throw new ServerOverloadedException();
         }
         return new WrapperConnection(freeConnection, this);
     }
     
-    public void putConnection(Connection connection) {
+    /**
+     * Return connection to the queue (pool)
+     * @param connection connection is returned
+     */
+    public synchronized void putConnection(Connection connection) {
         if (connection != null) {
             if (connections.size() < maxConnections) {
                 connections.add(connection);
