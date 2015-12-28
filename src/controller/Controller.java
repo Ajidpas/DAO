@@ -24,7 +24,7 @@ public class Controller {
                 System.out.println(meal.getId() + ", " + meal.getType() + ", " + 
                         meal.getName() + ", " + meal.getDescription() + ", " + meal.getPrice());
             }
-            System.out.println("adding meal - " + model.addMeal(new Meal(45, "Bottled Beer", "Chernihivs'ke", "Very tasty", new BigDecimal(10))));
+            System.out.println("adding meal - " + model.addMeal(new Meal(45, new BigDecimal(10), "Bottled Beer", "Chernihivs'ke", "Very tasty")));
             System.out.println("After adding");
             for (Meal meal : model.getMeal()) {
                 System.out.println(meal.getId() + ", " + meal.getType() + ", " + 

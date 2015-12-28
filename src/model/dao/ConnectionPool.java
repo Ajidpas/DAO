@@ -58,7 +58,7 @@ public class ConnectionPool {
      * @throws SQLException 
      * @throws ServerOverloadedException
      */
-    public synchronized WrapperConnection getConnection() throws SQLException, ServerOverloadedException {
+    public synchronized WrapperConnectionProxy getConnection() throws SQLException, ServerOverloadedException {
         Connection freeConnection;
         if (connections.size() > 0) {
             freeConnection = connections.poll();
@@ -77,7 +77,7 @@ public class ConnectionPool {
         } else {
             throw new ServerOverloadedException();
         }
-        return new WrapperConnection(freeConnection, this);
+        return new WrapperConnectionProxy(freeConnection, this);
     }
     
     /**

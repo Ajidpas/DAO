@@ -40,9 +40,9 @@ public class RestaurantDAO extends AbstractDAO {
      * @throws ServerOverloadedException
      */
     @Override
-    public List findAllMeal() throws ServerOverloadedException {
+    public List findAll() throws ServerOverloadedException {
         List<Meal> meals = new ArrayList<>();
-        WrapperConnection wrapperConnection = null;
+        WrapperConnectionProxy wrapperConnection = null;
         Statement st;
         try {
             wrapperConnection = CONNECTION_POOL.getConnection();
@@ -86,7 +86,7 @@ public class RestaurantDAO extends AbstractDAO {
             default:
                 return null;
         }
-        WrapperConnection wrapperConnection = null;
+        WrapperConnectionProxy wrapperConnection = null;
         PreparedStatement ps;
         try {  
             wrapperConnection = CONNECTION_POOL.getConnection();
@@ -118,7 +118,7 @@ public class RestaurantDAO extends AbstractDAO {
         String name = rs.getString("meal_name");
         String description = rs.getString("meal_description");
         BigDecimal price = rs.getBigDecimal("meal_price");
-        return new Meal(id, type, name, description, price);
+        return new Meal(id, price, type, name, description);
     }
     
     /**
@@ -128,9 +128,9 @@ public class RestaurantDAO extends AbstractDAO {
      * @throws ServerOverloadedException
      */
     @Override
-    public boolean createMeal(Meal entity) throws ServerOverloadedException {
+    public boolean create(Meal entity) throws ServerOverloadedException {
         boolean flag = false;
-        WrapperConnection wrapperConnection = null;
+        WrapperConnectionProxy wrapperConnection = null;
         PreparedStatement ps;
         try {
             wrapperConnection = CONNECTION_POOL.getConnection();
@@ -159,8 +159,8 @@ public class RestaurantDAO extends AbstractDAO {
      * @throws ServerOverloadedException
      */
     @Override
-    public boolean deleteMeal(Meal entity) throws ServerOverloadedException {
-        return deleteMeal(entity.getId());
+    public boolean delete(Meal entity) throws ServerOverloadedException {
+        return delete(entity.getId());
     }
 
     /**
@@ -170,9 +170,9 @@ public class RestaurantDAO extends AbstractDAO {
      * @throws ServerOverloadedException
      */
     @Override
-    public boolean deleteMeal(int id) throws ServerOverloadedException {
+    public boolean delete(int id) throws ServerOverloadedException {
         boolean flag = false;
-        WrapperConnection wrapperConnection = null;
+        WrapperConnectionProxy wrapperConnection = null;
         PreparedStatement ps;
         try {
             wrapperConnection = CONNECTION_POOL.getConnection();
@@ -191,7 +191,7 @@ public class RestaurantDAO extends AbstractDAO {
     }
     
     @Override
-    public boolean updateMeal(Meal entity) {
+    public boolean update(Meal entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

@@ -22,14 +22,14 @@ public class Model {
     private List<Meal> meals = new ArrayList<>();
     
     public List<Meal> getMeal() throws ServerOverloadedException {
-        return meals = restaurant.findAllMeal();
+        return meals = restaurant.findAll();
     }
     
     public boolean addMeal(Meal entity) throws ServerOverloadedException {
-        return restaurant.createMeal(entity);
+        return restaurant.create(entity);
     }
     
     public boolean delete(int id) throws ServerOverloadedException {
-        return restaurant.deleteMeal(id);
+        return restaurant.delete(id);
     }
 }

@@ -18,13 +18,13 @@ public abstract class AbstractDAO<K, T extends Meal> {
     
     protected static final ConnectionPool CONNECTION_POOL = new ConnectionPool();
     
-    public abstract List<T> findAllMeal() throws ServerOverloadedException;
+    public abstract List<T> findAll() throws ServerOverloadedException;
     
-    public abstract boolean createMeal(T entity) throws ServerOverloadedException;
+    public abstract boolean create(T entity) throws ServerOverloadedException;
     
-    public abstract boolean deleteMeal(T entity) throws ServerOverloadedException;
+    public abstract boolean delete(T entity) throws ServerOverloadedException;
     
-    public abstract boolean deleteMeal(int id) throws ServerOverloadedException;
+    public abstract boolean delete(int id) throws ServerOverloadedException;
     
-    public abstract boolean updateMeal(T entity) throws ServerOverloadedException;
+    public abstract boolean update(T entity) throws ServerOverloadedException;
 }

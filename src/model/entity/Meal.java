@@ -11,10 +11,7 @@ import java.math.BigDecimal;
  *
  * @author Sasha
  */
-public class Meal {
-    
-    /** meal id */
-    private int id;
+public class Meal extends Service {
     
     /** meal type */
     private MealType type;
@@ -25,14 +22,6 @@ public class Meal {
     /** meal description */
     private String description;
     
-    /** money variable */
-    private BigDecimal price;
-
-    /**
-     * Default constructor
-     */
-    public Meal() {}
-    
     /**
      * Constructor
      * @param id meal id
@@ -41,20 +30,40 @@ public class Meal {
      * @param description meal description 
      * @param price meal price
      */
-    public Meal(int id, String type, String name, String description, BigDecimal price) {
-        this.id = id;
+    public Meal(int id, BigDecimal price, String type, String name, String description) {
+        super(id, price);
         setType(type);
         this.name = name;
         this.description = description;
-        this.price = price;
     }
-
+    
     /**
-     * Get meal id
-     * @return meal id
+     * Set meal type
+     * @param type meal type
      */
-    public int getId() {
-        return id;
+    public void setType(MealType type) {
+        this.type = type;
+    }
+    
+    /**
+     * Set meal type
+     * @param typeString meal type as string variable
+     */
+    public final void setType(String typeString) {
+        switch (typeString) {
+            case "Express Lunch":
+                this.type = MealType.EXPRESS_LUNCH;
+                break;
+            case "Dessert":
+                this.type = MealType.DESSERT;
+                break;
+            case "Beverage":
+                this.type = MealType.BEVERAGE;
+                break;
+            case "Bottled Beer":
+                this.type = MealType.BOTTLE_BEER;
+                break;   
+        }
     }
 
     /**
@@ -81,74 +90,21 @@ public class Meal {
     }
     
     /**
-     * get meal name
-     * @return meal name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Get meal description 
-     * @return meal description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * get meal price
-     * @return meal price
-     */
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    /**
-     * Set meal id
-     * @param id meal id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * Set meal type
-     * @param type meal type
-     */
-    public void setType(MealType type) {
-        this.type = type;
-    }
-
-    /**
-     * Set meal type
-     * @param typeString meal type as string variable
-     */
-    public final void setType(String typeString) {
-        switch (typeString) {
-            case "Express Lunch":
-                this.type = MealType.EXPRESS_LUNCH;
-                break;
-            case "Dessert":
-                this.type = MealType.DESSERT;
-                break;
-            case "Beverage":
-                this.type = MealType.BEVERAGE;
-                break;
-            case "Bottled Beer":
-                this.type = MealType.BOTTLE_BEER;
-                break;   
-        }
-    }
-    
-    /**
      * Set meal name
      * @param name meal name
      */
     public void setName(String name) {
         this.name = name;
     }
-
+    
+    /**
+     * get meal name
+     * @return meal name
+     */
+    public String getName() {
+        return name;
+    }
+    
     /**
      * Set meal description
      * @param description meal description
@@ -158,11 +114,11 @@ public class Meal {
     }
 
     /**
-     * Set meal price
-     * @param price meal price
+     * Get meal description 
+     * @return meal description
      */
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public String getDescription() {
+        return description;
     }
     
     /**

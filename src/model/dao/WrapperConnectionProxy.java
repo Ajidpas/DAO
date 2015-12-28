@@ -14,7 +14,7 @@ import java.sql.Statement;
  *
  * @author Sasha
  */
-public class WrapperConnection {
+public class WrapperConnectionProxy {
     
     /** connection pool from which connection is added */
     ConnectionPool connectionPool;
@@ -27,7 +27,7 @@ public class WrapperConnection {
      * @param connection free connection from connection pool
      * @param connectionPool connection pool with connections
      */
-    public WrapperConnection(Connection connection, ConnectionPool connectionPool) {
+    public WrapperConnectionProxy(Connection connection, ConnectionPool connectionPool) {
         this.connection = connection;
         this.connectionPool = connectionPool;
     }
