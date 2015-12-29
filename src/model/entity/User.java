@@ -6,6 +6,8 @@
 package model.entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,7 +19,10 @@ public class User extends Person {
     private BigDecimal account;
     
     /** zone id */
-    private int zoneId;
+    private Zone zone;
+    
+    /** list of user's orders */
+    private List<Order> orders;
 
     /**
      * Constructor
@@ -26,13 +31,13 @@ public class User extends Person {
      * @param lastName user last name
      * @param email user email
      * @param account user account
-     * @param zoneId user zone id
+     * @param zone user zone id
      */
     public User(int id, String firstName, String lastName, String email, 
-            BigDecimal account, int zoneId) {
+            BigDecimal account, Zone zone) {
         super(id, firstName, lastName, email);
         this.account = account;
-        this.zoneId = zoneId;
+        this.zone = zone;
     }
 
     /**
@@ -44,11 +49,11 @@ public class User extends Person {
     }
 
     /**
-     * Get user zone id
-     * @return int user zone id
+     * Get user zone 
+     * @return user zone 
      */
-    public int getZoneId() {
-        return zoneId;
+    public Zone getZone() {
+        return zone;
     }
 
     /**
@@ -60,11 +65,53 @@ public class User extends Person {
     }
 
     /**
-     * Set user zone id
-     * @param zoneId 
+     * Set user zone 
+     * @param zone 
      */
-    public void setZoneId(int zoneId) {
-        this.zoneId = zoneId;
+    public void setZone(Zone zone) {
+        this.zone = zone;
+    }
+    
+    /**
+     * Set all user's orders
+     * @param orders 
+     */
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+    
+    /**
+     * Get orders
+     * @return list of orders
+     */
+    public List<Order> getOrders() {
+        return orders;
+    }
+    
+    /**
+     * Add order to the user's order list
+     * @param order 
+     */
+    public void addOrder(Order order) {
+        if (orders == null) {
+            orders = new ArrayList<>();
+        }
+        orders.add(order);
+    }
+    
+    /**
+     * Remove order from user's order list by id
+     * @param orderId id of order might be removed
+     */
+    public void removeOrderById(int orderId) {
+        if (orders != null) {
+            for (Order order : orders) {
+                if (order.id == orderId) {
+                    orders.remove(order);
+                    break;
+                }
+            }
+        }
     }
     
 }

@@ -31,23 +31,7 @@ public class Zone extends Service {
         this.zoneType = zoneType;
         this.adminId = adminId;
     }
-
-    /**
-     * Get zone type
-     * @return zone type
-     */
-    public ZoneType getZoneType() {
-        return zoneType;
-    }
-
-    /**
-     * Get admin id
-     * @return int admin id
-     */
-    public int getAdminId() {
-        return adminId;
-    }
-
+    
     /**
      * Set zone type
      * @param zoneType zone type
@@ -57,11 +41,27 @@ public class Zone extends Service {
     }
 
     /**
+     * Get zone type
+     * @return zone type
+     */
+    public ZoneType getZoneType() {
+        return zoneType;
+    }
+    
+    /**
      * Set admin id
      * @param adminId int admin id
      */
     public void setAdminId(int adminId) {
         this.adminId = adminId;
+    }
+
+    /**
+     * Get admin id
+     * @return int admin id
+     */
+    public int getAdminId() {
+        return adminId;
     }
     
     /**
@@ -70,4 +70,5 @@ public class Zone extends Service {
     enum ZoneType {
         VIP, MIDDLE, MARGINAL
     }
+    
 }

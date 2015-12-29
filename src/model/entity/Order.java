@@ -6,6 +6,8 @@
 package model.entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,41 +16,48 @@ import java.math.BigDecimal;
 public class Order extends DBEntity {
     
     /** order status */
-    private OrderStatus orderStatus;
-    /** user id */
-    private int userId;
+    private OrderStatus status;
     
     /** total price */
     private BigDecimal totalPrice;
+    
+    /** order items */
+    private List<OrderItem> orderItems;
 
     /**
      * Constructor
-     * @param orderStatus order status
+     * @param status order status
      * @param id user id
-     * @param userId user id
      * @param totalPrice total price
      */
-    public Order(int id, OrderStatus orderStatus, int userId, BigDecimal totalPrice) {
+    public Order(int id, OrderStatus status, BigDecimal totalPrice) {
         super(id);
-        this.orderStatus = orderStatus;
-        this.userId = userId;
+        this.status = status;
         this.totalPrice = totalPrice;
+    }
+    
+    /**
+     * Set order status
+     * @param status order status 
+     */
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     /**
      * Get order status
      * @return order status
      */
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
+    public OrderStatus getStatus() {
+        return status;
     }
-
+    
     /**
-     * Get user id
-     * @return int user id
+     * Set total price
+     * @param totalPrice total price
      */
-    public int getUserId() {
-        return userId;
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     /**
@@ -58,36 +67,39 @@ public class Order extends DBEntity {
     public BigDecimal getTotalPrice() {
         return totalPrice;
     }
-
+    
     /**
-     * Set order status
-     * @param orderStatus order status 
+     * Set all order items
+     * @param orderItems order items
      */
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
-
+    
     /**
-     * Set user id
-     * @param userId user id 
+     * Get list of items of this order
+     * @return list of order items
      */
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
-
+    
     /**
-     * Set total price
-     * @param totalPrice total price
+     * Add item to the order list
+     * @param orderItem order item
      */
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
+    public void addOrderItem(OrderItem orderItem) {
+        if (orderItems == null) {
+            orderItems = new ArrayList<>();
+        }
+        orderItems.add(orderItem);
     }
     
     /**
      * Order status
      */
     enum OrderStatus {
-        VAITING, PREPARING, READY, PAYED
+        CRETATED, VAITING, PREPARING, READY, PAYED
     }
     
 }
