@@ -22,6 +22,9 @@ public class Meal extends Service {
     /** meal description */
     private String description;
     
+    /** number of goods which are in the storehouse */
+    private int presenceNumber;
+    
     /**
      * Constructor
      * @param id meal id
@@ -29,12 +32,15 @@ public class Meal extends Service {
      * @param name meal name
      * @param description meal description 
      * @param price meal price
+     * @param presenceNumber number of goods which are in the storehouse
      */
-    public Meal(int id, BigDecimal price, String type, String name, String description) {
+    public Meal(int id, BigDecimal price, String type, String name, 
+            String description, int presenceNumber) {
         super(id, price);
         setType(type);
         this.name = name;
         this.description = description;
+        this.presenceNumber = presenceNumber;
     }
     
     /**
@@ -119,6 +125,22 @@ public class Meal extends Service {
      */
     public String getDescription() {
         return description;
+    }
+    
+    /**
+     * Set presence number
+     * @param presenceNumber number of goods which are in the storehouse
+     */
+    public void setPresenceNumber(int presenceNumber) {
+        this.presenceNumber = presenceNumber;
+    }
+    
+    /**
+     * Get presence number 
+     * @return number of goods which are in the storehouse
+     */
+    public int getPresenceNumber() {
+        return presenceNumber;
     }
     
     /**

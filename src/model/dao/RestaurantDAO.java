@@ -118,7 +118,7 @@ public class RestaurantDAO extends AbstractDAO {
         String name = rs.getString("meal_name");
         String description = rs.getString("meal_description");
         BigDecimal price = rs.getBigDecimal("meal_price");
-        return new Meal(id, price, type, name, description);
+        return new Meal(id, price, type, name, description, 10); // hard code
     }
     
     /**

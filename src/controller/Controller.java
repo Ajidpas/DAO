@@ -18,13 +18,16 @@ public class Controller {
     
     private final Model model = new Model();
     
+    /**
+     * HARD CODE!!!
+     */
     public void run() {
         try {
             for (Meal meal : model.getMeal()) {
                 System.out.println(meal.getId() + ", " + meal.getType() + ", " + 
                         meal.getName() + ", " + meal.getDescription() + ", " + meal.getPrice());
             }
-            System.out.println("adding meal - " + model.addMeal(new Meal(45, new BigDecimal(10), "Bottled Beer", "Chernihivs'ke", "Very tasty")));
+            System.out.println("adding meal - " + model.addMeal(new Meal(45, new BigDecimal(10), "Bottled Beer", "Chernihivs'ke", "Very tasty", 10))); // hard code
             System.out.println("After adding");
             for (Meal meal : model.getMeal()) {
                 System.out.println(meal.getId() + ", " + meal.getType() + ", " + 
