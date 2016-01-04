@@ -71,7 +71,7 @@ public class MealBuilder extends EntityBuilder {
      * @param wrapperConnection wrapper connection regarding to which prepared 
      *  statement might be created
      * @param id meal id
-     * @return prepared statement 
+     * @return DBEntity meal or null if it won't be found
      * @throws SQLException
      */
     @Override

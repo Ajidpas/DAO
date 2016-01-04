@@ -15,6 +15,9 @@ import java.util.List;
  */
 public class Order extends DBEntity {
     
+    /** user id */
+    private int userId;
+    
     /** order status */
     private OrderStatus status;
     
@@ -28,12 +31,30 @@ public class Order extends DBEntity {
      * Constructor
      * @param status order status
      * @param id user id
+     * @param userId user id
      * @param totalPrice total price
      */
-    public Order(int id, OrderStatus status, BigDecimal totalPrice) {
+    public Order(int id, int userId, OrderStatus status, BigDecimal totalPrice) {
         super(id);
+        this.userId = userId;
         this.status = status;
         this.totalPrice = totalPrice;
+    }
+    
+    /**
+     * Set user id
+     * @param userId user id
+     */
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+    
+    /**
+     * Get user id
+     * @return user id
+     */
+    public int getUserId() {
+        return userId;
     }
     
     /**
