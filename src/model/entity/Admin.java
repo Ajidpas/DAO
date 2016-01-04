@@ -14,6 +14,12 @@ public class Admin extends Person {
     /** admin type */
     private AdminType adminType;
     
+    /** admin login */
+    private String login;
+    
+    /** admin password */
+    private String password;
+    
     /**
      * Constructor
      * @param id admin id
@@ -21,10 +27,15 @@ public class Admin extends Person {
      * @param lastName admin last name
      * @param email admin email
      * @param adminType ordinary admin or super admin
+     * @param login admin login
+     * @param password admin password
      */
-    public Admin(int id, String firstName, String lastName, String email, AdminType adminType) {
+    public Admin(int id, String firstName, String lastName, String email, 
+            AdminType adminType, String login, String password) {
         super(id, firstName, lastName, email);
         this.adminType = adminType;
+        this.login = login;
+        this.password = password;
     }
     
     /**
@@ -44,9 +55,41 @@ public class Admin extends Person {
     }
     
     /**
+     * Set login
+     * @param login string login
+     */
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    
+    /**
+     * Get login
+     * @return string login
+     */
+    public String getLogin() {
+        return login;
+    }
+    
+    /**
+     * Set password
+     * @param password string password
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    /**
+     * Get password
+     * @return string password
+     */
+    public String getPassword() {
+        return password;
+    }
+    
+    /**
      * Class admin type
      */
-    enum AdminType {
+    public enum AdminType {
         ORDINARY_ADMIN,
         SUPER_ADMIN
     }

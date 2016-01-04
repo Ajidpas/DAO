@@ -98,7 +98,7 @@ public class Order extends DBEntity {
     /**
      * Order status
      */
-    enum OrderStatus {
+    public enum OrderStatus {
         CRETATED, VAITING, PREPARING, READY, PAYED
     }
     

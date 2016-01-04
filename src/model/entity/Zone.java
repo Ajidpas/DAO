@@ -67,7 +67,7 @@ public class Zone extends Service {
     /**
      * Zone type
      */
-    enum ZoneType {
+    public enum ZoneType {
         VIP, MIDDLE, MARGINAL
     }
     
